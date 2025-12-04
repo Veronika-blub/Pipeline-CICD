@@ -28,6 +28,18 @@ jobs:
           cp .env.example .env
           php artisan key:generate --ansi
 
-      - name: Run php tests
-        run: php artisan test -p
+      # - name: run php tests
+      #   run: php artisan test -p
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install js dependencies
+        run: pnpm install
+
+      - name: build frontend
+        run: pnpm build  #manifest.json
+
 

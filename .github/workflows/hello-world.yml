@@ -26,6 +26,7 @@ jobs:
 
       - name: Prepare Laravel
         run: |
+          cd pm2etml-apps-main
           cp .env.example .env
           php artisan key:generate --ansi
 

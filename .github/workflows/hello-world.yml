@@ -36,7 +36,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: Install JS dependencies
+      - name: js dependencies
         run: pnpm install
 
       - name: Build frontend

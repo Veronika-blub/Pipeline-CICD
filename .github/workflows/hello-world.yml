@@ -1,4 +1,4 @@
-name: Hello World Pipeline
+name: setup-php
 
 on:
   push:        

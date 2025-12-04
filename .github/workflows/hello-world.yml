@@ -1,4 +1,4 @@
-name: setup-php
+name: setup
 
 on:
   push:        
@@ -23,4 +23,12 @@ jobs:
         run: |
           cd pm2etml-apps-main
           composer install --no-interaction --prefer-dist
+
+      - name: Prepare Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate --ansi
+
+      - name: Run PHP tests
+        run: php artisan test -p
 

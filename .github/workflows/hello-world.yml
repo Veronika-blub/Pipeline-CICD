@@ -21,15 +21,13 @@ jobs:
 
       - name: php dependencies
         run: |
-          cd pm2etml-apps-main
           composer install --no-interaction --prefer-dist
 
       - name: Prepare Laravel
         run: |
-          cd pm2etml-apps-main
           cp .env.example .env
           php artisan key:generate --ansi
 
-      - name: Run PHP tests
+      - name: Run php tests
         run: php artisan test -p
 

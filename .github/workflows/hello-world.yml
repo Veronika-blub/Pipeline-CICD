@@ -31,15 +31,19 @@ jobs:
       # - name: run php tests
       #   run: php artisan test -p
 
-      - name: Setup node
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: '22'
 
-      - name: Install js dependencies
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install JS dependencies
         run: pnpm install
 
-      - name: build frontend
-        run: pnpm build  #manifest.json
+      - name: Build frontend
+        run: pnpm build
+
 
 

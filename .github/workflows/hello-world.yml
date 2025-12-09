@@ -9,6 +9,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    #init de mariadb
+    services:
+      mariadb:
+        image: mariadb:10.3.34
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: pm2
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,7 +50,7 @@ jobs:
           node-version: '22'
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: npm install -g pnpm #obligatory
 
       - name: js dependencies
         run: pnpm install
@@ -43,7 +59,11 @@ jobs:
         run: pnpm build
 
       - name: php tests
-        run: php artisan:test
+        run: php artisan test -p
+
+#         artisan:test 
+#         Run php artisan:test
+# Could not open input file: artisan:test
 
 
 

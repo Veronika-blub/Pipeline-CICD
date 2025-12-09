@@ -36,14 +36,14 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: js dependencies
-        run: pnpm install
+      # - name: js dependencies
+      #   run: pnpm install
 
       - name: Build frontend
         run: pnpm build
 
       - name: php tests
-        run: php artisan test -p
+        run: php artisan:test
 
 
 

@@ -76,6 +76,10 @@ jobs:
             sleep 2
           done
 
+      - name: Show .env
+        run: cat .env
+
+
       - name: Run migrations
         run: php artisan migrate:fresh --seed
 

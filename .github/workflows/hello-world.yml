@@ -24,20 +24,21 @@ jobs:
           --health-interval=5s
           --health-timeout=5s
           --health-retries=5
-
+    
     steps:
+      # repo checkout
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # setup php (+ extentions qui sont souvent utilisées with laravel)
       - name: Setup php
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.2' #v demandée dans readme - 8.1
           extensions: mbstring, pdo, pdo_mysql
 
       - name: php dependencies
-        run: |
-          composer install --no-interaction --prefer-dist
+        run: composer install --no-interaction --prefer-dist #pas de questions, telecharge zip 
 
       - name: Prepare Laravel
         run: |
@@ -65,5 +66,14 @@ jobs:
 #         Run php artisan:test
 # Could not open input file: artisan:test
 
+
+#
+      - name: Wait for MariaDB
+        run: |
+          sudo apt-get install -y mysql-client
+          until mysqladmin ping -h 127.0.0.1 --silent; do
+            echo "Waiting for MariaDB..."
+            sleep 2
+          done
 
 

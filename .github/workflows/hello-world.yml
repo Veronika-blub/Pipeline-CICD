@@ -66,8 +66,6 @@ jobs:
 #         Run php artisan:test
 # Could not open input file: artisan:test
 
-
-#
       - name: attendre MariaDB
         run: |
           sudo apt-get install -y mysql-client
@@ -87,8 +85,12 @@ jobs:
       - name: Show .env
         run: cat .env
 
-
       - name: Run migrations
         run: php artisan migrate:fresh --seed
 
-
+  security:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4

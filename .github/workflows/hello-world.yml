@@ -59,8 +59,7 @@ jobs:
       - name: Build frontend
         run: pnpm build
 
-      - name: php tests
-        run: php artisan test -p
+
 
 #         artisan:test 
 #         Run php artisan:test
@@ -81,12 +80,20 @@ jobs:
           # echo "AUTHENTICATOR=local" >> .env
           echo "AUTHENTICATOR_ENDPOINT_V2=http://localhost" >> .env
 
-      #à supprimmer
-      - name: Show .env
-        run: cat .env
-
+      # exec de tests dépend de la db
       - name: Run migrations
         run: php artisan migrate:fresh --seed
+
+      - name: php tests
+        run: |
+          mkdir -p reports
+          php artisan test -p > reports/testsRes.xml
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: php-test-report
+          path: reports/testsRes.xml
 
   security:
     runs-on: ubuntu-latest

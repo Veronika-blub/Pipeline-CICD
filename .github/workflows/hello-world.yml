@@ -94,3 +94,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: php, javascript
+
+      - name: Build project
+        run: |
+          composer install --no-interaction --prefer-dist
+          npm install
+          npm run build || true
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3

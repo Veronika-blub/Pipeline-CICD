@@ -102,7 +102,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
-          languages: [php, javascript]
+          languages: php, javascript
 
       - name: Build project
         run: |

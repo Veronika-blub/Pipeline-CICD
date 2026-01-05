@@ -91,7 +91,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: php-test-report
-          path: /reports/phpunit.xml
+          path: reports/phpunit.xml
 
   security:
     runs-on: ubuntu-latest
@@ -115,3 +115,4 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
+        

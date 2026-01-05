@@ -79,8 +79,9 @@ jobs:
           echo "AUTHENTICATOR_ENDPOINT_V2=http://localhost" >> .env
 
       # exec de tests dépend de la db
-      - name: Run migrations
-        run: php artisan migrate:fresh --seed
+     
+      # - name: Run migrations
+      #   run: php artisan migrate:fresh --seed
 
       - name: php tests
         run: |
@@ -108,9 +109,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
-          languages:
-            - php
-            - javascript
+          languages: php,javascript
 
       - name: Build project
         run: |

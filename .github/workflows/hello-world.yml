@@ -96,6 +96,11 @@ jobs:
   security:
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -103,7 +108,9 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
-          languages: php, javascript
+          languages:
+            - php
+            - javascript
 
       - name: Build project
         run: |

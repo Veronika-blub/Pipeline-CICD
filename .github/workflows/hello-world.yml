@@ -90,6 +90,7 @@ jobs:
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: php-test-report
           path: reports/phpunit.xml
@@ -109,7 +110,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
-          languages: php,javascript
+          languages: javascript
 
       - name: Build project
         run: |

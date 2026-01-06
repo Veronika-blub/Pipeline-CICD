@@ -121,3 +121,25 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo, pdo_mysql
+
+      - name: Install PHPCS
+        run: composer require --dev squizlabs/php_codesniffer
+
+      - name: Run PHPCS
+        run: |
+          mkdir -p reports
+          ./vendor/bin/phpcs --standard=PSR12 --report=checkstyle --report-file=reports/phpcs.xml app/ || true
+
+      - name: PHPCS report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phpcs-report
+          path: reports/phpcs.xml
+          if-no-files-found: warn 
+

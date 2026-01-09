@@ -95,7 +95,7 @@ jobs:
       - name: php tests
         run: |
           mkdir -p reports
-          ./vendor/bin/phpunit --log-junit reports/phpunit.xml || true
+          ./vendor/bin/pest --log-junit reports/phpunit.xml || true
 
       - name: Upload test report
         uses: actions/upload-artifact@v4

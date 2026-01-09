@@ -37,6 +37,16 @@ jobs:
           php-version: '8.2' #v demandée dans readme - 8.1
           extensions: mbstring, pdo, pdo_mysql
 
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+     
+     
       - name: php dependencies
         run: composer install --no-interaction --prefer-dist #pas de questions, telecharge zip 
 
@@ -65,7 +75,6 @@ jobs:
 
       - name: attendre MariaDB
         run: |
-          sudo apt-get install -y mysql-client
           until mysqladmin ping -h 127.0.0.1 --silent; do
             echo "Waiting for MariaDB..."
             sleep 2
@@ -80,8 +89,8 @@ jobs:
 
       # exec de tests dépend de la db
      
-      # - name: Run migrations
-      #   run: php artisan migrate:fresh --seed
+      - name: Run migrations
+        run: php artisan migrate:fresh --seed
 
       - name: php tests
         run: |
@@ -111,12 +120,6 @@ jobs:
         uses: github/codeql-action/init@v4
         with:
           languages: javascript
-
-      - name: Build project
-        run: |
-          composer install --no-interaction --prefer-dist
-          npm install
-          npm run build || true
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
